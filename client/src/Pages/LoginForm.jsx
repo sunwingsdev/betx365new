@@ -31,7 +31,10 @@ const LoginForm = ({ role, title }) => {
     (control) => control.category === "logo" && control.isSelected
   );
   const imageControl = homeControls?.find(
-    (control) => control.category === "admin-image" && control.isSelected
+    (control) => control.category === "login-image" && control.isSelected
+  );
+  const motherAdminImageControl = homeControls?.find(
+    (control) => control.category === "motheradmin-image" && control.isSelected
   );
 
   function generateCode() {
@@ -51,6 +54,7 @@ const LoginForm = ({ role, title }) => {
 
       if (loginData.token) {
         const { data: userData } = await getUser(loginData.token);
+        console.log(userData);
         if (
           userData?.status === "banned" ||
           userData?.status === "deactivated" ||
@@ -89,7 +93,11 @@ const LoginForm = ({ role, title }) => {
         <div className="flex overflow-y-auto flex-col border border-white md:flex-row lg:flex-row bg-white shadow-xl ml-10 md:ml-60 lg:ml-96 rounded-lg overflow-hidden w-3/4 md:1/3 lg:w-2/5 h-[500px] lg:h-[450px] lg:max-w-4xl mx-4">
           <figure className="lg:w-1/2 w-full h-1/3 md:h-auto lg:h-auto">
             <img
-              src={`${import.meta.env.VITE_BASE_API_URL}${imageControl?.image}`}
+              src={`${import.meta.env.VITE_BASE_API_URL}${
+                role === "mother-admin"
+                  ? motherAdminImageControl?.image
+                  : imageControl?.image
+              }`}
               alt="Album"
               className="w-full h-full object-cover"
             />
